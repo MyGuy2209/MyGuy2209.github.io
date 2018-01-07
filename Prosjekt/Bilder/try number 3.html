@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<style>
+
+    body {
+        margin:0;
+        display:grid;
+        min-height: 100vh;
+        grid-template-rows: auto 1fr auto;
+        font-family: sans-serif;
+    }
+
+    body > header {
+
+        background-color: black;
+        filter: drop-shadow(0 5px 5px darkred )
+    }
+
+    body > header > nav {
+        display: grid;
+        grid-auto-flow: column;
+
+    }
+
+    body > header > nav > a {
+
+
+
+
+
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        text-align: center ;
+        padding: 20px;
+        grid-gap: 100px;
+    }
+
+
+
+
+
+
+
+    body > header > nav > a > img{
+        height: 100px;
+        width:100px;
+    }
+
+    body > header > nav > a {
+
+        border-right: 1px solid white;
+        background-color:black;
+
+    }
+
+    body > header > nav a:last-child {
+
+        border-right: none;
+    }
+
+    body > header > nav > a.valgt {
+
+        color: white
+
+
+    }
+
+
+
+    body > header > nav > a:hover {
+        background-color: red;
+        color:white;
+    }
+
+    body > footer {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: grid;
+        grid-gap:20px;
+        grid-auto-flow: column;
+        text-align: center;
+    }
+
+    body > footer > article > img {
+        width: 90px;
+    }
+
+    body > footer  {
+
+        background-color: darkred;
+    }
+
+
+
+    * {
+        margin: 0;
+
+
+
+    }
+
+    body {
+
+        margin:0;
+        background-color: white ;
+        font-family: sans-serif;
+        color: white;
+    }
+    h1 {
+        margin-bottom: 16px;
+        text-align:center;
+
+
+
+
+    }
+
+    main {
+
+
+        margin: 0 auto; /* Midtstilling */
+        max-width: 900px;
+        min-height:100vh;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+
+    .slides {
+        width: 500%;
+        display: grid;
+        grid-template-columns:repeat(5,1fr);
+        transition: 0.5s;
+
+
+    }
+
+
+
+
+    .slides  > div  {
+
+        text-align: center;
+
+
+
+    }
+
+    .slides > div > img {
+
+        width: 20%;
+        user-select: none;
+    }
+
+
+
+
+    #wrapper {
+        position: relative;
+    }
+
+    #left {
+        position: absolute;
+        width:50px;
+        left: 1px;
+        top: 50%;
+
+    }
+    #right {
+        position: absolute;
+        width: 50px;
+        right: 1px;
+        top: 50%;
+
+    }
+
+
+
+
+</style>
+</head>
+
+
+<body>
+
+
+    <header>
+        <nav>
+
+
+
+
+
+            <a href="#">Home</a>
+            <a class="valgt" href="#">Menu</a>
+            <a href="#">Images</a>
+            <a  class="dropdown" href="#"> Store</a>
+
+
+
+        </nav>
+    </header>
+
+
+<main>
+
+
+
+
+
+    <h1>  Noice da</h1>
+
+    <div>
+
+    <div id="wrapper">
+        <img src="ArrowLeft.png" id="left" onclick="bakover()">
+        <img src="ArrowRight.png" id="right" onclick="forover()">
+        <div class="slides">
+
+            <div><img src="battlefront2.jpg"></div>
+            <div><img src="Odyssey.jpg"></div>
+            <div><img src="Destiny2.png" ></div>
+            <div><img src="BOTW.jpg"></div>
+            <div><img src="Destiny2.png"></div>
+
+        </div>
+
+    </div>
+
+
+
+        
+
+
+</main>
+
+<script>
+
+
+
+    let slides = document.querySelector(".slides");
+    let marg = 0;
+
+    function forover() {
+        if(marg > -400){
+            marg = marg - 100;
+        } else {
+            slides.animate([
+                {transform: "translateX(20px)"},
+                {transform: "translateX(0)"},
+                {transform: "translateX(10px)"},
+                {transform: "translateX(0)"}
+            ], {
+                duration: 200
+            });
+        }
+        slides.style.marginLeft =  marg + "%";
+    }
+
+    function bakover() {
+        if(marg < 0) {
+            marg = marg + 100;
+        } else {
+            slides.animate([
+                {transform: "translateX(-20px)"},
+                {transform: "translateX(0)"},
+                {transform: "translateX(-10px)"},
+                {transform: "translateX(0)"}
+            ], {
+                duration: 200
+            });
+        }
+        slides.style.marginLeft =  marg + "%";
+    }
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bubger</title>
+    <style>
+        body {
+            background-color: black;
+
+
+        }
+
+
+        #bubger {
+            display: grid;
+            width:16px;
+            height: 16px;
+            align-content: space-between;
+        }
+        #bubger > div {
+            height: 2px;
+            background-color: white;
+            cursor: pointer
+        }
+
+
+
+        #menu {
+            background-color: darkred;
+            position: absolute;
+            width: 300px;
+            left:-300px;
+            top: 120px;
+            min-height: calc(100vh - 64px);
+            transition: 0.5s;
+        }
+
+        #cb:checked ~ #menu  {
+
+            left: 0;
+
+        }
+        #cb {
+            display: none;
+        }
+        #bubger > div {
+
+            transition: 1s;
+        }
+
+        #cb:checked ~ #bubger > div:first-child {
+            transform: translateY(7px) rotate(45deg);
+
+
+
+        }
+
+        #cb:checked ~ #bubger > div:nth-child(2) {
+           opacity:0; }
+
+
+
+
+        #cb:checked ~ #bubger > div:last-child {
+            transform: translateY(-7px) rotate(-45deg); }
+
+
+        h1 {
+
+
+            color: white;
+        }
+
+
+
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+
+    <input type="checkbox" id="cb">
+
+    <label for="cb" id="bubger">
+
+        <div></div>
+        <div></div>
+        <div></div>
+
+    </label>
+
+    <nav id="menu"> <h1> yeee</h1></nav>
+
+
+
+
+
+</body>
+</html>

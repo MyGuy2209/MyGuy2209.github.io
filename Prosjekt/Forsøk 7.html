@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        body {
+
+            margin:0;
+        }
+
+
+        /* Main ccs*/
+
+
+
+
+        #wrapper {
+            position: relative;
+        }
+
+        #left {
+            position: absolute;
+            width:50px;
+            left: 1px;
+            top: 50%;
+
+
+        }
+        #right {
+            position: absolute;
+            width: 50px;
+            right: 1px;
+            top: 50%;
+
+        }
+
+
+        main {
+
+            grid-template-columns: repeat(12,1fr);
+            background-size: cover;
+            background-position: center ;
+            min-height: 100vh;
+
+
+
+        }
+
+
+        main > div {
+
+            margin-top: 0;
+            /* Midtstilling */
+            display: grid;
+            min-height:100vh;
+            background-color: transparent;
+            overflow: hidden;
+
+
+
+        }
+
+        .slides {
+            width: 500%;
+            display: grid;
+            grid-template-columns:repeat(5,1fr);
+            transition: 0.2s;
+
+
+        }
+
+
+
+
+        .slides  > div  {
+
+            text-align: center;
+
+
+
+        }
+
+        .slides > div > img {
+
+            width: 20%;
+            user-select: none;
+        }
+        main > article {
+
+            margin-top: 40px;
+            grid-gap: 40px;
+            text-align: center;
+            max-width: 20000px;
+            display:grid;
+            grid-template-columns: repeat(12,1fr);
+        }
+
+
+
+
+        /* Header css */
+
+        body >  header
+        {  display: grid;
+            height: 100px;
+
+            filter: drop-shadow(0 5px 5px black)
+
+        }
+
+
+
+        ul {  list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: grey;
+            max-height: 100px;
+        }
+
+        li {
+
+
+
+        }
+
+        li a, .dropbtn {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        li a:hover, .dropdown:hover .dropbtn {
+            background-color: red;
+        }
+
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+
+
+
+        ul > li > a {
+
+            font-size:150%;
+        }
+
+
+
+
+
+        ul > img {
+            margin-left: 50px;
+        }
+
+
+
+        li {
+
+
+            padding-top: 15px;
+        }
+
+        .row1 {grid-row: span 1; }
+        .row2 {grid-row: span 2; }
+        .row3 {grid-row: span 3; }
+        .row4 {grid-row: span 4; }
+        .row5 {grid-row: span 5; }
+        .row6 {grid-row: span 6; }
+        .row7 {grid-row: span 7; }
+        .row8 {grid-row: span 8; }
+        .row9 {grid-row: span 9; }
+        .row10{grid-row: span 10; }
+        .row11{grid-row: span 11; }
+        .row12{grid-row: span 12; }
+
+        .column1 {grid-column: span 1; }
+        .column2 {grid-column: span 2; }
+        .column3 {grid-column: span 3; }
+        .column4 {grid-column: span 4; }
+        .column5 {grid-column: span 5; }
+        .column6 {grid-column: span 6; }
+        .column7 {grid-column: span 7; }
+        .column8 {grid-column: span 8; }
+        .column9 {grid-column: span 9; }
+        .column10{grid-column: span 10; }
+        .column11{grid-column: span 11; }
+        .column12{grid-column: span 12; }
+
+
+
+
+        footer {
+
+            border-top: 1px  solid red
+            margin-bottom: 40px;
+
+
+        }
+        ul.topnav {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+
+        }
+
+        ul.topnav li {float: left;}
+
+        ul.topnav li a {
+            display: block;
+
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+
+
+
+
+
+        @media screen and (max-width: 600px){
+
+            ul.topnav li {float: none;}
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+<header>
+
+
+    <ul class="topnav ">
+
+        <a href="#home" ><img src="Bilder/mindre%20logo.png"></a>
+
+
+
+
+
+
+        <li><a href="#home">Home</a></li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Tilbehør </a>
+            <div class="dropdown-content">
+                <a href="#"> Data Mus</a>
+                <a href="#">skjermkort </a>
+                <a href="#">Gaming stol </a>
+                <a href="#">Kontrollere </a>
+                <a href="#">Virtual reality  </a>
+
+            </div>
+
+        </li>
+
+
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">systemer</a>
+            <div class="dropdown-content">
+                <a href="#">Nintendo switch</a>
+                <a href="#">playsation 4</a>
+                <a href="#">Xbox one </a>
+                <a href="#">PC </a>
+
+
+
+
+            </div>
+        </li>
+
+        <li> <a href="#">Om siden</a></li>
+
+
+
+    </ul>
+
+
+
+
+
+
+
+</header>
+
+
+<main>
+
+
+
+
+
+    <article>
+
+        <article class="column6 row2">
+
+            <img src="Bilder/Nintendo%20attempt%202%20.png">
+
+
+        </article>
+
+
+        <article class="column6 "><img src="Bilder/Fungerpls.png"> </article>
+
+
+
+        <article class="column6 row2 ">
+
+            <img src="Bilder/Nice%20kek.png">
+
+
+
+        </article>
+
+
+    </article>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="wrapper">
+            <img src="Bilder/ArrowLeft.png" id="left" onclick="bakover()">
+            <img src="Bilder/ArrowRight.png" id="right" onclick="forover()">
+            <div class="slides">
+
+                <div><img src="Bilder/battlefront2.jpg"><h1>star wars battlefront 2, 699Kr</h1></div>
+                <div><img src="Bilder/Odyssey.jpg"><h1>super mario oddeyssey, 599Kr</h1></div>
+                <div><img src="Bilder/Destiny2.png" >  <h1> Destiny 2, 499Kr </h1></div>
+                <div><img src="Bilder/BOTW.jpg">  <h1> Legend of Zelda Breath of the wild, 599</h1></div>
+                <div><img src="Bilder/WW2.jpg"><h1>  Call of duty World war 2,
+                    599Kr </h1> </div>
+
+            </div>
+
+        <div>
+
+
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+</main>
+
+<script>
+
+
+
+    let slides = document.querySelector(".slides");
+    let marg = 0;
+
+    function forover() {
+        if(marg > -400){
+            marg = marg - 100;
+        } else {
+            slides.animate([
+                {transform: "translateX(20px)"},
+                {transform: "translateX(0)"},
+                {transform: "translateX(10px)"},
+                {transform: "translateX(0)"}
+            ], {
+                duration: 200
+            });
+        }
+        slides.style.marginLeft =  marg + "%";
+    }
+
+    function bakover() {
+        if(marg < 0) {
+            marg = marg + 100;
+        } else {
+            slides.animate([
+                {transform: "translateX(-20px)"},
+                {transform: "translateX(0)"},
+                {transform: "translateX(-10px)"},
+                {transform: "translateX(0)"}
+            ], {
+                duration: 200
+            });
+        }
+        slides.style.marginLeft =  marg + "%";
+    }
+
+
+</script>
+
+
+
+
+<footer>
+
+
+</footer>
+
+</body>
+</html>

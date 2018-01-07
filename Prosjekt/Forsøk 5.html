@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+
+    * {
+
+        margin:0;
+        padding:0;
+    }
+
+    body {
+        background-color: white;
+
+
+    }
+
+    body > header {
+
+        height: 100px;
+        background-color: red;
+        display: grid;
+        filter: drop-shadow(0 5px 5px black)
+    }
+
+
+    body > header > div > img {
+        padding-left: 500px;
+       padding-top:0;
+        text-align:center;
+    }
+
+
+    #bubger {
+        display: grid;
+        width:16px;
+        height: 16px;
+        align-content: space-between;
+    }
+    #bubger > div {
+        height: 2px;
+        background-color: black;
+        cursor: pointer
+    }
+
+
+
+    #menu {
+        background-color: darkred;
+        position: absolute;
+        width: 300px;
+        left:-300px;
+        top: 120px;
+        min-height: calc(100vh - 64px);
+        transition: 0.5s;
+    }
+
+    #cb:checked ~ #menu  {
+
+        left: 0;
+
+    }
+    #cb {
+        display: none;
+    }
+    #bubger > div {
+
+        transition: 1s;
+    }
+
+    #cb:checked ~ #bubger > div:first-child {
+        transform: translateY(7px) rotate(45deg);
+
+
+
+    }
+
+    #cb:checked ~ #bubger > div:nth-child(2) {
+        opacity:0; }
+
+
+
+
+    #cb:checked ~ #bubger > div:last-child {
+        transform: translateY(-7px) rotate(-45deg); }
+
+
+    h1 {
+
+
+        color: white;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+</head>
+<body>
+
+
+<header>
+
+    <div>
+
+
+    <input type="checkbox" id="cb">
+
+    <label for="cb" id="bubger">
+
+        <div></div>
+        <div></div>
+        <div></div>
+
+    </label>
+
+    <nav id="menu"> <h1> yeee</h1></nav>
+
+
+        <img src="Bilder/mindre%20logo.png">
+
+
+    </div>
+
+
+
+
+</header>
+
+
+
+
+
+<main>
+
+
+
+</main>
+
+<footer>
+
+
+
+
+
+
+
+</footer>
+
+
+
+
+</body>
+
+
+</html>
