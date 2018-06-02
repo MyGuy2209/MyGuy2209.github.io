@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Title</title>
+
+    <style>
+
+    body {
+    background-color:darkslategrey;
+    padding-top: 5em;
+    max-height:200px;
+
+    }
+    * {
+    font-family:"Comic Sans MS";
+    margin:0;
+    padding:0;
+    max-height:1270px;
+
+    }
+
+    main {
+
+
+    }
+
+    button {
+    background:blue;
+    color: white;
+    padding:10px;
+    width:200px;
+    text-align:center;
+    font-size:1.9em;
+    margin-bottom: 30px;
+    cursor: pointer;
+
+
+
+
+    }
+
+    .gang {
+        grid-template-columns:20% 75%;
+    }
+
+    input#inpMelding {
+    background:none;
+    border:none;
+    border-bottom: 1px solid black;
+    outline: none;
+    box-shadow:none;
+    color:papayawhip;
+    font-size:1.6em;
+    font-weight:300;
+    margin-bottom: 3em;
+    padding:1.2em 0;
+    width: 70%;
+
+
+
+
+
+
+    }
+
+
+
+    .chat-container {
+
+            display:grid;
+            width:75%;
+            float:right;
+            grid-gap: 20px;
+            padding-right: 100px;
+            height:400px;
+            overflow-y:scroll; , padding-left:1000px;
+
+
+
+
+
+
+
+    }
+
+    .chat-container:nth-child(4){
+    opacity: .8;
+
+    }.chat-container:nth-child(3){
+    opacity: .6;
+
+    }.chat-container:nth-child(2){
+    opacity: .4;
+
+    }
+
+    .chat-container a{
+    text-transform: uppercase;
+    font-weight:bold;
+    color:red;
+    font-size: .8em;
+    letter-spacing: 2px;
+
+
+
+    }
+
+    .chat-container p {
+
+
+    background: black;
+    padding: 1.1em;
+    color:white;
+    margin: 5px 0 10px 0;
+    padding-left: 170px;
+
+
+
+
+    }
+
+
+
+        #menu {
+
+            width: 800px;
+            height:100%;
+            background-color:darkgrey;
+
+
+
+        }
+
+        #menu  ul  li {
+            list-style:none;
+            padding:15px 10px;
+            border-bottom: 1px solid black;
+        }
+
+
+
+
+
+    #bubger {
+        display: grid;
+        width:16px;
+        height: 16px;
+        align-content: space-between;
+
+    }
+    #bubger > div {
+        height: 2px;
+        background-color: white;
+        cursor: pointer
+    }
+
+
+
+    #menu {
+        background-color: darkslategray;
+        position: absolute;
+        width: 300px;
+        left:-300px;
+        top: 245px;
+        min-height: calc(60vh - 50px);
+        transition: 0.5s;
+        height:200px;
+
+
+
+
+
+    }
+
+    #cb:checked ~ #menu  {
+
+        left: 0;
+
+    }
+    #cb {
+        display: none;
+    }
+    #bubger > div {
+
+        transition: 1s;
+    }
+
+    #cb:checked ~ #bubger > div:first-child {
+        transform: translateY(7px) rotate(45deg);
+
+
+
+    }
+
+    #cb:checked ~ #bubger > div:nth-child(2) {
+        opacity:0; }
+
+
+
+
+    #cb:checked ~ #bubger > div:last-child {
+        transform: translateY(-7px) rotate(-45deg); }
+
+
+     img {
+
+         text-align: center;
+         padding-left: 400px;
+     }
+
+
+
+
+    </style>
+</head>
+<body>
+<header>
+
+    <img   src="count%20it%20up.png">
+
+
+    <div class="row columns">
+
+
+
+    <input type="checkbox" id="cb">
+
+    <label for="cb" id="bubger">
+
+        <div></div>
+        <div></div>
+        <div></div>
+
+    </label>
+
+    <nav id="menu"> <ul>
+
+        <li><a href="Chat%20VZ.html">Home</a></li>
+        <li>About</li>
+        <li ><a href="index.html">Logout</a></li>
+        <li>FirebaseAuth</li>
+    </ul>
+
+    </nav>
+
+
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<main id="main" class="chat-container">
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+<footer >
+
+    <div class="row columns">
+
+
+    <div>
+
+        <form id="knapp">
+
+
+            <input type="text" id="inpMelding"   placeholder="skriv noe!"  class="gang" />
+
+            <button type="submit"  class="gang">send</button>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+
+</footer>
+
+
+<script src="moment.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyApmGYoYm8H6dvf3cPBjUxZAuptmXkC6qc",
+        authDomain: "you-know-i-had-to-do-it-to-em.firebaseapp.com",
+        databaseURL: "https://you-know-i-had-to-do-it-to-em.firebaseio.com",
+        projectId: "you-know-i-had-to-do-it-to-em",
+        storageBucket: "you-know-i-had-to-do-it-to-em.appspot.com",
+        messagingSenderId: "221007188131"
+    };
+    firebase.initializeApp(config);
+</script>
+
+
+<script>
+
+
+    const inpMelding = document.getElementById("inpMelding");
+    const main = document.getElementById("main");
+    const  knapp = document.getElementById("knapp");
+
+    const db = firebase.database();
+    const meldinger = db.ref("meldinger");
+
+    function lagreMelding(evt){
+        evt.preventDefault();
+        meldinger.push({
+
+            tekst:inpMelding.value,
+            tid: firebase.database.ServerValue.TIMESTAMP
+        });
+        inpMelding.value = "";
+
+
+
+    }
+
+    function  visMelding(snap){
+        const melding = snap.val();
+        main.innerHTML =`<p>${melding.tekst} ${new Date(melding.tid)}</p>`+ main.innerHTML;
+
+
+
+    }
+
+
+    meldinger
+        .orderByChild("tid")
+        .limitToLast(100)
+        .on("child_added", visMelding);
+    knapp.onsubmit = lagreMelding;
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
