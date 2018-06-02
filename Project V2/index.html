@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        body {
+            background: whitesmoke;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        input, button {
+
+            font-family:"Nunito", sans-serif;
+
+
+        }
+
+        .MainLogin, .Login-div {
+            width: 20%;
+            margin: auto;
+            margin-top: 150px;
+            padding:20px;
+
+        }
+
+
+        .MainLogin  input {
+            display: block;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color:whitesmoke;
+            padding: 15px;
+            outline: none;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .MainLogin button, .Login-div  button {
+            background: darkblue;
+            color: whitesmoke;
+            border: 0;
+            border-radius: 5px;
+            padding: 15px;
+            display: block;
+            width: 112%;
+            margin-top:20px;
+
+
+
+
+
+        }
+        .MainLogin input:focus {
+            border: 1px solid mediumvioletred;
+
+        }
+
+
+
+        .MainLogin button:hover, .Login-div button:hover {
+            background: whitesmoke;
+            color: black;
+            border: 1px solid darkblue;
+            cursor: pointer;
+
+
+
+
+
+
+        }
+
+        p {
+           padding: 20px;
+            margin: auto ;
+
+        }
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<div id="login_div" class="MainLogin">
+    
+    <h3>Logg inn da</h3>
+
+    <input type="email" placeholder="Email..." id="emailTxt">
+
+    <input type="password" placeholder="Password..." id="pass_felt">
+
+    <button id="loginbtn">Login to Account</button>
+    <button  id="signupbtn">sign up</button>
+
+    
+    
+    
+    
+    
+</div>
+
+<div id="user_div"  class="Login-div">
+    <h3>Welcome my guy</h3>
+    <p>Whats up glorboes</p>
+    <button class="LogOut">Logout</button>
+
+
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyApmGYoYm8H6dvf3cPBjUxZAuptmXkC6qc",
+        authDomain: "you-know-i-had-to-do-it-to-em.firebaseapp.com",
+        databaseURL: "https://you-know-i-had-to-do-it-to-em.firebaseio.com",
+        projectId: "you-know-i-had-to-do-it-to-em",
+        storageBucket: "you-know-i-had-to-do-it-to-em.appspot.com",
+        messagingSenderId: "221007188131"
+    };
+    firebase.initializeApp(config);
+</script>
+
+
+<script>
+
+    const emailTxt = document.getElementById("emailTxt");
+    const pass_felt = document.getElementById("pass_felt");
+    const loginbtn = document.getElementById("loginbtn");
+    const signupbtn = document.getElementById("signupbtn");
+
+
+    loginbtn.addEventListener('click', e => {
+
+
+        const email = emailTxt.value;
+        const pass = pass_felt.value;
+        const auth = firebase.auth();
+
+        const promise = auth.signInWithEmailAndPassword(email, pass);
+
+        promise.catch(e => console.log(e.message));
+
+    });
+
+
+    signupbtn.addEventListener('click', e => {
+
+        const email = emailTxt.value;
+        const pass = pass_felt.value;
+        const auth = firebase.auth();
+
+
+        const promise = auth.createUserWithEmailAndPassword(email, pass);
+
+
+
+        promise.catch(e => console.log(e.message));
+
+
+    });
+
+
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+
+        if(firebaseUser) {
+            console.log(firebaseUser);
+        } else {
+            console.log('not logged in');
+
+        }
+
+
+
+
+
+
+    });
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
