@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas id="minCanvas" width="500" height="500"></canvas>
+
+
+<script>
+    var  minCanvas = document.getElementById("minCanvas");
+
+    var ctx = minCanvas.getContext("2d");
+
+    var yPosisjon = 0;
+
+
+    ctx
+
+
+
+
+    while ( yPosisjon < 500) {
+
+
+
+        ctx.lineWidth = 5;
+        ctx.moveTo(0, yPosisjon);
+        ctx.lineTo(200, yPosisjon);
+        yPosisjon = yPosisjon + 20;
+        ctx.stroke();
+
+    }
+</script>
+</body>
+</html>
