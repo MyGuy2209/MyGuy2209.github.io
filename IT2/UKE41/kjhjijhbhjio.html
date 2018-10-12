@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas id="canvas" height="600" width="600" onclick="tegn()"></canvas>
+
+<script>
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+
+    function tegn () {
+
+        for (var i = 0; i <1 ; i++) {
+            var x = event.clientX;
+            var y = event.clientY;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 25, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+
+
+</script>
+
+</body>
+
+
+</html>
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<article id="kontakter">
+
+
+
+</article>
+
+<script>
+
+
+
+
+
+
+
+    var kontakter = document.getElementById("kontakter");
+
+
+    function nyKontakt(fornavn, etternavn, telefon){
+
+        kontakter.innerHTML += "<h2>Kontakt</h2>";
+        kontakter.innerHTML += "<p>Fornavn:" + fornavn + "</p>";
+        kontakter.innerHTML += "<p>Etternavn:"  + etternavn + "</p>";
+        kontakter.innerHTML += "<p>Telefon:" + telefon + "</p>";
+
+
+    }
+
+    nyKontakt("Per", "Omar", "What ");
+    nyKontakt("Kodak", "crack", "21908309812309812 ");
+    nyKontakt("Per", "Omar", "What ");
+
+
+
+    function f(x) {
+        document.write("Funksjonen f er lik" + (3 * x) + "når x er lik " + x +" <br>");
+
+    }
+
+
+
+        f(3);
+        f(2);
+
+
+        function areal(w, h){
+            document.write("Arealet av rektangelet er " + w *h, " i cm")
+
+        }
+
+        areal(3, 9)
+</script>
+
+</body>
+</html>
