@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+
+        img {
+            height: 200px;
+            width: 200px;
+
+
+        }
+
+        body {
+            align-items: center;
+            display: block;
+        }
+
+        div {
+
+            transition: 0.1s;
+
+
+        }
+
+
+    </style>
+</head>
+<body>
+<main>
+
+<div id="krab">
+    <img src="Bilder/plugwalk.gif" alt="">
+
+
+</div>
+
+<div id="TheGame">
+
+
+
+
+</div>
+
+
+
+
+</main>
+
+
+<script>
+
+
+
+
+
+    let x = 500;
+    let y = 500;
+
+
+    var krab = document.getElementById("krab");
+    krab.style.mariginLeft = x + "px";
+    krab.style.marginTop = y  + "px";
+
+
+
+
+
+
+
+
+
+
+    window.onkeydown = function (event){
+
+        if (event.code === "ArrowLeft"){
+
+            x = x- 5;
+
+
+        }  else if(event.code === "ArrowRight"){
+            x = x+ 5;
+        }
+        else if(event.code === "ArrowUp"){
+            y = y - 5;
+
+        }   else if (event.code === "ArrowDown"){
+            y = y + 5;
+        }
+
+        else if ( event.code === "KeyZ"){
+            krab.src = Bilder/Bluefireanimation.gif;
+        }
+
+        krab.style.marginLeft = x + "px";
+        krab.style.marginTop = y  + "px";
+
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
