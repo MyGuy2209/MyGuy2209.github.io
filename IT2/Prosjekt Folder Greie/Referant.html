@@ -10,7 +10,7 @@
 
         #pic {
             height:32px;
-            width: 32px;
+            width: 10px;
         }
     </style>
 </head>
@@ -18,14 +18,12 @@
 
 <main>
 
+<div>
+   <canvas id="canvas" height="clientHeight"  width="clientWidth" >
 
-   <canvas id="canvas" >
 
-       <img src="Bilder/walkanimation.gif" alt="" id="pic">
 
    </canvas>
-
-
 
 
 
@@ -56,21 +54,26 @@
     let context, controller, loop;
 
     context = document.querySelector("canvas").getContext("2d");
+    const canvas = document.getElementById("canvas");
 
-    context.canvas.height = 1368;
-    context.canvas.width = 768;
+    context.canvas.height = window.innerHeight - 25;
+    context.canvas.width = window.innerWidth - 25;
 
 
 
     let img = new Image();
-
-    img.src= "Bilder/standing.png";
-
+    img.src= "Bilder/walkanimation.gif";
 
 
+    var background = new Image();
 
 
-    let rectangle = {
+
+
+
+
+
+     rectangle = {
 
         height:32,
         jumping:true,
@@ -79,7 +82,6 @@
         x_velocity:0,
         y:0,
         y_velocity:0,
-
 
 
 
@@ -141,46 +143,52 @@
         rectangle.y_velocity += 1.0;
         rectangle.x += rectangle.x_velocity;
         rectangle.y += rectangle.y_velocity;
-        rectangle.x_velocity *= 0.9;
+        rectangle.x_velocity *=  0.9;
         rectangle.y_velocity *= 0.9;
 
-        // if rectangle is falling below floor line
-        if (rectangle.y > 180 - 16 - 32) {
+
+        if (rectangle.y > 515 -16 - 32) {
 
             rectangle.jumping = false;
-            rectangle.y = 180 - 16 - 32;
+            rectangle.y = 515 - 16 - 32;
             rectangle.y_velocity = 0;
 
         }
 
 
-        if (rectangle.x < -768) {
+        if (rectangle.x < - window.innerWidth - 25) {
 
-            rectangle.x = 768;
+            rectangle.x = window.innerWidth - 25;
 
-        } else if (rectangle.x > 768) {// if rectangle goes past right boundary
+        } else if (rectangle.x > window.innerWidth - 25) {
 
-            rectangle.x = -768;
+            rectangle.x = -window.innerWidth -25 ;
 
         }
 
+
         context.fillStyle = "#202020";
-        context.fillRect(0, 0, 1368, 768);
-        context.drawImage(img, 10, 10);
-        context.fillStyle = "blue";
+        context.fillRect(0, 0, window.innerWidth, window.innerHeight);
         context.beginPath();
-        context.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height,);
+        context.save();
+        context.rect(rectangle.x , rectangle.y, rectangle.width, rectangle.height, );
+        context.drawImage(img, rectangle.x, rectangle.y);
+        context.clip();
+        context.restore();
+        context.fillStyle  = "#202020";
         context.fill();
-        context.strokeStyle = "pink";
-        context.lineWidth = 6;
+        context.strokeStyle= "black";
+        context.lineWidth = 25;
         context.beginPath();
-        context.moveTo(0,  164);
-        context.lineTo(768, 164);
+        context.moveTo(0,  620);
+        context.lineTo(window.innerWidth, 620);
         context.stroke();
 
 
 
+
         window.requestAnimationFrame(loop);
+
 
     };
 
