@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="GameWorld.js">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+
+
+        #pic {
+            height:32px;
+            width: 10px;
+        }
+
+         button:hover {
+            background: whitesmoke;
+            color: black;
+            border: 1px solid black;
+            cursor: pointer;
+
+
+
+        }
+
+         button {
+            background: purple;
+            color: whitesmoke;
+            border: 0;
+            border-radius: 5px;
+            padding: 15px;
+             width: 100px;
+             height: 10px;
+             text-align:center;
+
+
+
+
+
+
+
+
+        }
+
+    body {
+
+        background-color: black;
+        background-image: url('Bilder/bac.png');
+    }
+    </style>
+</head>
+<body>
+
+<main>
+
+
+
+
+    <header>
+
+
+        <button  onclick="playAudio()">GameMusic</button>
+
+        <button  onclick="pauseAudio()"> PAUSE</button>
+    </header>
+
+
+
+    <canvas id="canvas" height="clientHeight"  width="clientWidth" >
+
+
+
+   </canvas>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+<script>
+
+
+
+
+
+    let context, controller, loop;
+
+    context = document.querySelector("canvas").getContext("2d"); //Definerer variabler til canvas, controller, og loop som er fysikken
+    const canvas = document.getElementById("canvas");
+
+    context.canvas.height = window.innerHeight - 60; //Størelse på canvas
+    context.canvas.width = window.innerWidth - 35;
+
+
+
+    let img = new Image();  //Lagrer bilde som en variabel/Objekt for senere bruk
+    img.src= "Bilder/walkanimation.gif"; //kilden til bildet
+
+
+    let back = new Image(); //Lagrer bilde som en variabel/Objekt for senere bruk
+    back.src= "Bilder/backgroundlevel.jpg"; //kilden til bilde
+
+
+
+    var audio = new Audio('VampireKiller.wav'); //Lagrer Spillets lyd/music fil
+
+
+    var captain = new Audio('ye.wav');
+
+
+
+
+    function playAudio() {
+
+        audio.play();
+
+    }
+
+    function pauseAudio() {
+        audio.pause();
+    }
+
+    //Funksjon for å spille og stoppe audio sin variabel når man trykker på HTML knapp pauseAudio og playAudio
+     rectangle = {
+
+        height:150,
+        jumping:true,
+        width:80,
+        x:100,
+        x_velocity:0,
+        y:0,
+        y_velocity:0,
+
+
+
+
+
+
+
+    }; //lager et rektangel som objekt, Dette er hovedkarakteren i spille man beveger rundt på
+
+
+    controller = {
+
+        left:false,
+        right:false,
+        up:false,
+        keyListener:function(event) {
+
+            var key_state = (event.type == "keydown")?true:false;
+
+            switch(event.keyCode) {
+
+                case 37://switch case for venstre pil tast
+                    controller.left = key_state;
+                    break;
+                case 38://  switch case for pill opp knappen
+                    controller.up = key_state;
+                    break;
+                case 39://  switch case for høyre knapp, case 39 gjelder nøyaktig for opp knapp case 40 for eksempel er arrow down knappen
+                    controller.right = key_state;
+                    break;
+
+            }
+
+        }
+
+    };
+    //Koden under er en rekke med if setninger, disse tar får seg fysikken til rektanggel objektet
+    loop = function() {
+
+                if (controller.up && rectangle.jumping == false) {
+
+                    rectangle.y_velocity -= 45; //Når pill tast opp blir trukket, så hopper rectangle med en hvis fart før den faller ned
+                    rectangle.jumping = true;
+
+                }
+
+                if (controller.left) {
+
+                    rectangle.x_velocity -= 1.0; //Hvis venstre pill knapp blir trukket blir rectangle trukket med en fart på 1.0 til venstre altså -1.0
+
+                }
+
+                if (controller.right) {
+
+                    rectangle.x_velocity += 1.0;//Gjelder samme bare med høyre knapp, bruker fart +1.0
+
+                }
+
+                rectangle.y_velocity += 2.0; //Gravitasjon som trekker den ned konstant, motvirker hoppe farten oppover
+                rectangle.x += rectangle.x_velocity; //Endrer rektangles posisjon i x-retning til å følge if(controller left) og if(controller right)
+                rectangle.y += rectangle.y_velocity; //Fungerer slikt som øverige linje men i y-retning
+                rectangle.x_velocity *=  0.9;//sørger for at bevegelsene er smoothe, den gjør det ved å ha variabler som nesten fungerer som friskjon som i platformer spill
+                rectangle.y_velocity *= 0.9;//Sørger for at rectangle faller og hopper fint
+
+
+                if (rectangle.y > 485 -16 - 32) {
+
+                    rectangle.jumping = false;
+                    rectangle.y = 485 - 16 - 32;
+                    rectangle.y_velocity = 0;
+
+                }
+                //if setninger som sørger for at rectangle ikke kan falle etter et hvis punkt på skjermen i y-retning, vi setter et punkt som på en måte fungerer som gulv til spille
+
+
+                if (rectangle.x < - window.innerWidth - 25) {
+
+                    rectangle.x = window.innerWidth - 25;
+
+                } else if (rectangle.x > window.innerWidth - 25) {
+
+                    rectangle.x = -window.innerWidth -25 ;
+
+                }
+                    //If setningene gjør at hvis vi forbi passer canvas område i enten høyre eller venstre siden så looper du tilbake til motsatt side av canvase
+
+
+                context.fillStyle = "black";
+                context.fillRect(0, 0, window.innerWidth, window.innerHeight);//Tegner spill rommet til canvase
+                context.beginPath();
+                context.save();
+                context.rect(rectangle.x - 30 , rectangle.y , rectangle.width, rectangle.height, );//Tegner rektangel objektet
+                context.drawImage(img, rectangle.x -40, rectangle.y);//Tegner bildet, å oppdaterer bildes posisjon likt som rektangle, effektiv erstater rektangle med en spill karakter av valg
+                context.clip();
+                context.restore();
+                context.fillStyle  = "transparent";//Setter rectangle til transparent slik at vi kun ser img elementet som er tegnett under rektangle
+                context.fill();
+                context.strokeStyle= "grey";//Lager en stripe hvor spill gulvet omtrentlig ligger
+                context.lineWidth = 25;
+                context.beginPath();
+                context.moveTo(0,  590);
+                context.lineTo(window.innerWidth, 590);
+                context.stroke();
+
+
+
+
+
+
+                window.requestAnimationFrame(loop);//oppdaterer bevegelsene til rectangel objektet
+
+
+
+    };
+
+
+
+
+    window.addEventListener("keydown", controller.keyListener);
+    window.addEventListener("keyup", controller.keyListener);
+    window.requestAnimationFrame(loop);
+
+
+</script>
+</body>
+</html>
