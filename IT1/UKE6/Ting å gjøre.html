@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.min.css">
+
+    <style>
+
+        body {
+
+            background-color: greenyellow;
+
+        }
+
+        main {
+            max-width: 700px;
+            Margin: auto;
+            padding: 10px;
+
+        }
+
+        h1 {
+
+            text-align: center;
+            color: red;
+
+        }
+
+        #inpTekst {
+            background-color: #feff94;
+            font-size: 1.2rem; /
+            padding: 4px;
+        }
+
+        #Todothing < article {
+            display: grid;
+            grid-template-columns: 1fr auto;
+                     }
+
+        .lbDelete {
+
+            padding-right: 5px;
+            font-weight: bold;
+            padding-left: 5px;
+            opacity: 0.3;
+
+
+        }
+
+        .lbDelete:hover {
+            opacity: 1;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+    <main>
+
+        <h1>To do thing infact</h1>
+        <input type="text" id="inpTekst" placeholder="Hva må jeg huske?" autofocus>
+        <section id=Todothing >
+
+            <article>
+
+                <label > gå ut med junk</label>
+                <label class="lbDelete">X</label>
+
+
+
+
+            </article>
+        </section>
+
+
+
+        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyApmGYoYm8H6dvf3cPBjUxZAuptmXkC6qc",
+                authDomain: "you-know-i-had-to-do-it-to-em.firebaseapp.com",
+                databaseURL: "https://you-know-i-had-to-do-it-to-em.firebaseio.com",
+                projectId: "you-know-i-had-to-do-it-to-em",
+                storageBucket: "you-know-i-had-to-do-it-to-em.appspot.com",
+                messagingSenderId: "221007188131"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+
+        <script>
+            const inpTekst = document.getElementById("inpTekst");
+            const Todothing = document.getElementById("Todothing");
+
+            const db = firebase.database();
+            const thingdo = db.ref("thingdo");
+
+            function lagrethingdo(){
+                thingdo.push({
+                    tekst: inpTekst.value,
+                    done: false
+
+
+                });
+                inpTekst.value= "";
+            }
+            function slett(key) {
+                const thing = thingdo.child(key);
+                thing.remove();
+                const thingdosomslettes = document.getElementById(key);
+                Todothing.removeChild(thingdosomslettes);
+            }
+
+
+
+            function visthingdo(snap){
+                const thing = snap.val();
+                const key = snap.key;
+
+                Todothing.innerHTML += ` <article id="${key}">
+
+                <label > ${thing.tekst}</label>
+                <label class="lbDelete" onclick="slett('${key}')">X</label>
+
+
+
+
+            </article>`;
+
+
+            }
+
+            inpTekst.onchange =lagrethingdo;
+            thingdo.on("child_added",visthingdo);
+
+
+
+        </script>
+
+    </main>
+
+</body>
+</html>
