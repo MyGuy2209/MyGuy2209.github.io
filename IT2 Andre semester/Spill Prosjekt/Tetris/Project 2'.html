@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+
+            overflow: hidden;
+        }
+
+
+
+    </style>
+</head>
+
+
+
+
+<body>
+
+
+<div id="score"></div>
+<canvas id="tetris" width="240" height="400">
+</canvas>
+
+
+<script>
+
+const canvas = document.querySelector("#tetris");
+const ctx = canvas.getContext("2d");
+
+ctx.scale(20,20);
+
+
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+gameLoop();
+
+
+function gameLoop () {
+
+
+    const T = [
+        [0, 1, 0],
+        [1, 1, 1],
+        [0, 0, 0]
+    ];
+
+    function draw() {
+        drawT(spiller.T, spiller.pos);
+
+    }
+
+
+    function drawT(T, offset) {
+        T.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value !== 0) {
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(x + offset.x, y + offset.y, 1, 1)
+                }
+
+            });
+        });
+    }
+
+
+    let dropTeller = 0;
+    let dropInterval = 450;
+
+
+    let forrigeTid = 0;
+
+    function update(tid = 0) {
+        const endringTid = tid - forrigeTid;
+
+        forrigeTid = tid;
+
+
+        dropTeller += endringTid;
+        if (dropTeller > dropInterval) {
+            spiller.pos.y++;
+
+            dropTeller = 0;
+
+        }
+
+
+        draw();
+        window.requestAnimationFrame(update);
+    }
+
+
+    const spiller = {
+        pos: {x: 4, y: 1},
+        T: T,
+    };
+
+
+    update();
+
+}
+
+
+
+
+
+</script>
+</body>
+</html>
