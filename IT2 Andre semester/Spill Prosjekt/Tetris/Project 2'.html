@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        body {
+            background-color: darkslateblue;
+            color:white;
+            font-size: 2em;
+            text-align:center;
+
+        }
+
+
+
         canvas{
 
             overflow: hidden;
+            border: solid white;
         }
+
+        button{
+            background:blue;
+            color: white;
+            padding:10px;
+            width:100px;
+            text-align:center;
+            font-size:0.5em;
+            margin-bottom: 30px;
+            cursor: pointer;
+
 
 
 
@@ -17,8 +39,12 @@
 <body>
 
 
-<div id="score"></div>
+<button  onclick="playAudio()">TRYKK HER FOR MEMES</button>
+
+
+<div id="score">0</div>
 <canvas id="tetris" width="240" height="400">
+
 </canvas>
 
 
@@ -29,6 +55,18 @@ const ctx = canvas.getContext("2d");
 
 ctx.scale(20,20);
 
+let audio = new Audio('Beatbox.wav');
+
+function playAudio() {
+
+    audio.play();
+
+}
+
+function pauseAudio() {
+    audio.pause();
+}
+
 
 
 gameLoop();
@@ -37,11 +75,28 @@ gameLoop();
 function gameLoop () {
 
 
-    const brikke = [
-        [0, 1,0 ],
-        [0, 1,  0],
-        [1, 1, 0]
-    ];
+
+
+    function arrayFjern (){
+        let rowCount =1;
+      outer:  for(let y = world.length -1; y > 0; y--){
+            for( let x =0; x < world[y].length; x++){
+                if(world[y][x] === 0){
+                    continue outer
+                }
+            }
+          const row =   world.splice(y, 1)[0].fill(0);
+          world.unshift(row);
+          y++;
+
+          spiller.score += rowCount*10;
+          rowCount*= 2.5;
+        }
+
+
+    }
+
+
 
     function kollisjon(world, spiller) {
         const[m, o] = [spiller.brikke, spiller.pos];
@@ -58,6 +113,7 @@ function gameLoop () {
         return false;
     }
 
+
     function createBox (w, h) {
         const brikke = [];
 
@@ -67,7 +123,61 @@ function gameLoop () {
         }
         return brikke;
     }
-    ///
+
+    function byggBrikke(type) {
+        if (type === "T") {
+            return [
+
+                [0, 1, 0],
+                [1, 1, 1],
+                [0, 0, 0]
+
+
+            ];
+        } else if (type === "O") {
+            return [
+                [2, 2],
+                [2, 2],
+
+            ];
+
+        } else if (type === "L") {
+            return [
+                [0, 3, 0],
+                [0, 3, 0],
+                [0, 3, 3]
+            ];
+        } else if (type === "J") {
+            return [
+                [0, 4, 0],
+                [0, 4, 0],
+                [4, 4, 0]
+
+
+            ];
+        } else if (type === "I") {
+            return [
+                [0, 5, 0,0],
+                [0, 5, 0,0 ],
+                [0, 5, 0,0 ],
+                [0, 5, 0,0 ]
+
+            ];
+        } else if (type === "S") {
+            return [
+                [0, 6, 6],
+                [6, 6, 0],
+                [0, 0, 0]
+
+            ];
+        }else if (type === "Z") {
+            return [
+                [7, 7, 0],
+                [0, 7, 7],
+                [0, 0, 0]
+            ];
+        }
+    }
 
     function draw() {
         ctx.fillStyle = "black";
@@ -81,7 +191,7 @@ function gameLoop () {
         brikke.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value !== 0) {
-                    ctx.fillStyle = 'blue';
+                    ctx.fillStyle = farger[value];
                     ctx.fillRect(x + offset.x, y + offset.y, 1, 1)
                 }
 
@@ -107,7 +217,9 @@ function gameLoop () {
             spiller.pos.y--;
 
             merge(world, spiller);
-            spiller.pos.y=0;
+            spillerReset();
+            arrayFjern();
+            oppdaterScore();
         }
         dropTeller = 0;
     }
@@ -120,8 +232,33 @@ function gameLoop () {
         }
     }
 
+    function spillerReset () {
+        const brikker = "TLJOISZ";
+        spiller.brikke = byggBrikke(brikker[brikker.length * Math.random()|0]);
+        spiller.pos.y = 0;
+        spiller.pos.x = (world[0].length / 2 | 0) -
+            (spiller.brikke[0].length / 2 | 0);
+
+        if(kollisjon(world, spiller)){
+            world.forEach(row => row.fill(0));
+            spiller.score= 0;
+            oppdaterScore();
+        }
+    }
     function spillerRotate(vei){
-      rotate(spiller.brikke, vei)
+        const pos = spiller.pos.x;
+        let offset = 1;
+      rotate(spiller.brikke, vei);
+        while(kollisjon(world, spiller) ){
+            spiller.pos.x+= offset;
+            offset =- (offset + (offset > 0 ? 1 : -1));
+
+            if ( offset > spiller.brikke[0].length){
+                rotate(spiller.brikke, -vei );
+                spiller.pox.x = pos;
+                return
+            }
+        }
 
 
     }
@@ -171,11 +308,27 @@ function rotate(brikke, vei){
         window.requestAnimationFrame(update);
     }
 
+    function oppdaterScore (){
+        document.querySelector("#score").innerHTML = "Poeng: " + spiller.score;
+    }
+
+    const farger = [
+       null,
+        "purple",
+        "yellow",
+        "orange",
+        "blue",
+        "aqua",
+        "green",
+        "red",
+    ];
+
     const world = createBox(12, 20);
 
     const spiller = {
-        pos: {x: 4, y: 2},
-        brikke: brikke,
+        pos: {x: 0, y: 0},
+        brikke: null,
+        score : 0,
     };
 
         document.addEventListener('keydown', event => {
@@ -192,7 +345,8 @@ function rotate(brikke, vei){
         }
         });
 
-
+    spillerReset();
+    oppdaterScore();
     update();
 
 }
