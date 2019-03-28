@@ -76,14 +76,15 @@ function gameLoop () {
       outer:  for(let y = world.length -1; y > 0; y--){
             for( let x =0; x < world[y].length; x++){
                 if(world[y][x] === 0){
-                    continue outer
-                }
+                    continue outer                          //Denne funksjonen fjerner en linje når den er fylt, d
+                }                                           //Den gjør det ved om sjekke om arrayene som spille er sammensett av er null
+                                                            //Er de 0 skal den forsette som vanlig, er en linje fylt med med tall som ikke er 0 blir den fjernet og gjort om til 0 igjen
             }
-          const row =   world.splice(y, 1)[0].fill(0);
+          const row =   world.splice(y, 1)[0].fill(0);       //Dytter brikker som er igjen etter fjerningen ned til bunnen
           world.unshift(row);
           y++;
 
-          spiller.score += rowCount*10;
+          spiller.score += rowCount*10;                         //Hver gang en linje fjernes skal scoren øke med verdier som er gitt her
           rowCount*= 3;
         }
 
@@ -279,7 +280,7 @@ function rotate(brikke, vei){
 
 
     let dropTeller = 0;
-    let dropInterval = 150;
+    let dropInterval = 200;
 
 
     let forrigeTid = 0;
