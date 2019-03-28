@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tetris Prosjekt</title>
     <style>
         body {
             background-color: darkslateblue;
@@ -15,7 +15,7 @@
         canvas{
 
             overflow: hidden;
-            border: solid white;
+            border: solid darkred;
         }
 
         button {
@@ -47,13 +47,14 @@
 
 <script>
 
-const canvas = document.querySelector("#tetris");
+const canvas = document.querySelector("#tetris");    //referer til canvas  elementet  i HTML
 const ctx = canvas.getContext("2d");
 
 ctx.scale(20,20);
 
 let audio = new Audio('Beatbox.wav');
 
+//Funksjonen lager en variabel får en lyd fil som skal spilles gjennom button elementet i HTML
 function playAudio() {
 
     audio.play();
@@ -61,12 +62,7 @@ function playAudio() {
 
 }
 
-function pauseAudio() {
-    audio.pause();
-}
-
-
-
+//Gameloop looper gjennom alle funksjonene i spillet
 gameLoop();
 
 
@@ -88,7 +84,7 @@ function gameLoop () {
           y++;
 
           spiller.score += rowCount*10;
-          rowCount*= 2.5;
+          rowCount*= 3;
         }
 
 
@@ -99,8 +95,8 @@ function gameLoop () {
     function kollisjon(world, spiller) {
         const[m, o] = [spiller.brikke, spiller.pos];
         for (let y = 0; y < m.length; ++y){
-            for (let x =0; x < m[y].length; ++x){
-                if (m[y][x] !== 0 &&
+            for (let x =0; x < m[y].length; ++x){               //Funksjonen sjekker  hvordan kollisjonen mellom brette og brikkene, denne blir brukt i får å kunne gi spille flere egenskaper for eksempel rotasjon.
+                if (m[y][x] !== 0 &&                               //
                     (world[y + o.y] &&
                     world[y+ o.y ][x + o.x]) !== 0)  {
                     return true;
@@ -114,7 +110,6 @@ function gameLoop () {
 
     function createBox (w, h) {
         const brikke = [];
-
         while( h--){
             brikke.push(new Array(w).fill(0));
 
@@ -130,6 +125,7 @@ function gameLoop () {
                 [1, 1, 1],
                 [0, 0, 0]
 
+                                       //Brikkene i tetris spillet er sammensatt av Array gitt forskjllige verdier for videre bruk
 
             ];
         } else if (type === "O") {
@@ -167,7 +163,7 @@ function gameLoop () {
                 [6, 6, 0],
                 [0, 0, 0]
 
-            ];
+            ];                          //Brikkene i spillet er da TOLJISZ, for eksempel hvis typen array som skal komme fram i spille er = S så returnerer den array til S
         }else if (type === "Z") {
             return [
                 [7, 7, 0],
@@ -179,7 +175,7 @@ function gameLoop () {
 
     function draw() {
         ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height); //Basic canvas function, tegner den sorte boxen som er spille brette, tegner også brikken i brette
         drawBrikke(world, {x:0, y:0});
         drawBrikke(spiller.brikke, spiller.pos);
 
@@ -189,8 +185,8 @@ function gameLoop () {
         brikke.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value !== 0) {
-                    ctx.fillStyle = farger[value];
-                    ctx.fillRect(x + offset.x, y + offset.y, 1, 1)
+                    ctx.fillStyle = farger[value]; //linjen her gir farger til hver brikke basert på tallene i sin array. Tallet 1 får fargen til det første fargen i Arrayen Farger.
+                    ctx.fillRect(x + offset.x, y + offset.y, 1, 1) //Fyller brikken som dropper ned
                 }
 
             });
@@ -211,9 +207,8 @@ function gameLoop () {
     function spillerDrop (){
 
         spiller.pos.y++;
-        if(kollisjon(world, spiller)){
+        if(kollisjon(world, spiller)){ //Funksjonen styrer hvordan hver brikke dropper, og hva som skal skje etter den har droppet
             spiller.pos.y--;
-
             merge(world, spiller);
             spillerReset();
             arrayFjern();
@@ -222,23 +217,22 @@ function gameLoop () {
         dropTeller = 0;
     }
 
-
     function spillerMove(vei){
-        spiller.pos.x += vei;
+        spiller.pos.x += vei;           //funksjonen som lar deg bevegge deg i X-retning, Denne referers nede i kontroller funksjonen
         if(kollisjon(world, spiller)){
             spiller.pos.x -=vei;
         }
     }
 
     function spillerReset () {
-        const brikker = "TLJOISZ";
-        spiller.brikke = byggBrikke(brikker[brikker.length * Math.random()|0]);
+        const brikker = "TLJOISZ"; //Typene som brikkene er sat til blir refeert slik at det kan brukes
+        spiller.brikke = byggBrikke(brikker[brikker.length * Math.random()|0]);//Sender et tilfeldig array fra typene av brikker, | tegne er en letter måte å gjøre Math.floor
         spiller.pos.y = 0;
         spiller.pos.x = (world[0].length / 2 | 0) -
             (spiller.brikke[0].length / 2 | 0);
 
         if(kollisjon(world, spiller)){
-            world.forEach(row => row.fill(0));
+            world.forEach(row => row.fill(0));         //Sørger fot at når spille er tapt, så skal score variabelen settes tilbake til null
             spiller.score= 0;
             oppdaterScore();
         }
@@ -266,7 +260,7 @@ function rotate(brikke, vei){
         for(let x =0; x<y; ++x){
             [
                 brikke[x][y],
-                brikke[y][x],
+                brikke[y][x],       //funksjonen som gjør at brikkene kan roteres, Den roterer rekkefølgen på arrayen for eksempel  array [3,0,0,] blir gjort til [0,0,3]
             ] = [
 
                 brikke[y][x],
@@ -285,15 +279,16 @@ function rotate(brikke, vei){
 
 
     let dropTeller = 0;
-    let dropInterval = 600;
+    let dropInterval = 150;
 
 
     let forrigeTid = 0;
+                                            //Brikkene i spiller blir droppet i intervaller som blir satt av disse funksjonene
+    function update(tid= 0) {
 
-    function update(time = 0) {
-        let  endringTid = time - forrigeTid;
+        let  endringTid = tid -  forrigeTid;     //denne tiden på oppdateres utafor spill funksjonen som man se nederst
 
-        forrigeTid = time;
+        forrigeTid = tid;
 
 
         dropTeller += endringTid;
@@ -301,19 +296,19 @@ function rotate(brikke, vei){
          spillerDrop()
 
         }
-
+                                            //Sørger for at et en ny brikke blir tegnet mellom hvert intervall, minker du intervallet vil brikkene droppe raskere
         draw();
         window.requestAnimationFrame(update);
     }
 
     function oppdaterScore (){
-        document.querySelector("#score").innerHTML = "Poeng: " + spiller.score;
+        document.querySelector("#score").innerHTML = "Poeng: " + spiller.score; // funksjon som opppdater poeng når du fyller ut enn linje med arrayene fra brikkene
     }
 
     const farger = [
        null,
         "purple",
-        "yellow",
+        "yellow",       //Brikkene ble forskjellige tall rslik at vær av dem kunne bli gitt en unik farge som er listet i denne arrayen
         "orange",
         "blue",
         "aqua",
@@ -324,14 +319,14 @@ function rotate(brikke, vei){
     const world = createBox(12, 20);
 
     const spiller = {
-        pos: {x: 0, y: 0},
+        pos: {x: 0, y: 0},  //Dette er spilleren, gjennom denne constanten skal brikkene posisjon oppdateres fra
         brikke: null,
         score : 0,
     };
 
         document.addEventListener('keydown', event => {
         if(event.code === "ArrowLeft"){
-            spillerMove(-1);
+            spillerMove(-1);                                //Kontroller funksjonen, i stedet får å gi hver kontroll en egenskap lagde jeg funksjoner med egenskaper som refferer til hver kontroll i stedet.
         } else if (event.code === "ArrowRight") {
             spillerMove(1)
         }
@@ -343,9 +338,9 @@ function rotate(brikke, vei){
         }
         });
 
-    spillerReset();
-    oppdaterScore();
-    update();
+    spillerReset(); //Starter spillet på nytt når spille brettet er fylt i Y retningen
+    oppdaterScore();      //oppdaterer poeng etter hvor mange Array som blir fylt og blir fjernet                 //Flere funksjoner  oppdaterer hvis deler av spillet
+    update();           //oppdaterer interval tidene som brikkene skal sendes i
 
 }
 
